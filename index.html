@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./dist/styles.css">
+    <style>
+        .mobile-sidebar { transition: transform 0.3s ease; }
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 40;
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+<main class="flex-1 flex flex-col md:flex-row">
+
+    <div class="mx-2.5 mt-3 md:hidden h-12 flex items-center bg-white dark:bg-[#091120] rounded shadow-lg px-4">
+        <button id="mobile-menu-btn">
+            <img src="./src/assets/img/Frame 12161.svg" alt="Menu" class="w-6 h-6">
+        </button>
+    </div>
+
+    <div id="overlay"></div>
+
+    <aside id="mobile-menu"
+           class="fixed inset-y-0 right-0 w-64 bg-white dark:bg-[#091120] shadow-lg p-4
+                  transform translate-x-full mobile-sidebar md:hidden z-50">
+        <div class="flex flex-col h-full justify-between">
+
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="text-lg font-semibold">کویٔرا لیست</h2>
+                <button id="mobile-menu-close" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+                    ×
+                </button>
+            </div>
+
+            <nav class="space-y-2 -mt-40">
+                <a href="#"
+                   class="flex items-center px-4 py-2 rounded-lg
+                      bg-blue-50 hover:bg-blue-100 dark:bg-[#041933] dark:hover:bg-[#041933]
+                      transition-colors"
+                >
+                    <div
+                            class="w-6 h-6 bg-blue-500 dark:bg-white flex-shrink-0
+                                   flex justify-center
+                                   mask mask-center mask-contain"
+                            style="
+                                 mask: url('./src/assets/img/home-2.svg') no-repeat center;
+                                 -webkit-mask: url('./src/assets/img/home-2.svg') no-repeat center;
+                                 mask-size: contain;
+                                 -webkit-mask-size: contain;"
+                    >
+                    </div>
+                    <span class="text-blue-600 dark:text-white font-medium mr-3">خانه</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                    <img src="./src/assets/img/task-square.svg" alt="" class="w-6 h-6">
+                    <span class="mr-3">تسک‌ها</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                    <img src="./src/assets/img/calendar.svg" alt="" class="w-6 h-6">
+                    <span class="mr-3">تقویم</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                    <img src="./src/assets/img/arrange-square-2.svg" alt="" class="w-6 h-6">
+                    <span class="mr-3">گزارشات</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                    <img src="./src/assets/img/setting.svg" alt="" class="w-6 h-6">
+                    <span class="mr-3">تنظیمات</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                    <img src="./src/assets/img/24-support.svg" alt="" class="w-6 h-6">
+                    <span class="mr-3">پشتیبانی</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                    <img src="./src/assets/img/profile.svg" alt="" class="w-6 h-6">
+                    <span class="mr-3">پروفایل</span>
+                </a>
+            </nav>
+
+            <div class="space-y-4 mt-4">
+                <div class="flex justify-center">
+                    <div class="inline-flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+                        <button id="btn-light" class="flex items-center gap-x-2 px-4 py-2 rounded-lg
+                                            bg-white text-gray-800 dark:bg-transparent dark:text-gray-400
+                                            hover:bg-white/80 dark:hover:bg-gray-700 transition">
+                            <img src="./src/assets/img/sun.svg" alt="" class="w-5 h-5">
+                            <span class="text-sm font-medium">روشن</span>
+                        </button>
+                        <button id="btn-dark" class="flex items-center gap-x-2 px-4 py-2 rounded-lg
+                                           bg-transparent text-gray-500 dark:bg-gray-700 dark:text-gray-100
+                                           hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                            <img src="./src/assets/img/moon.svg" alt="" class="w-5 h-5">
+                            <span class="text-sm font-medium">تاریک</span>
+                        </button>
+                    </div>
+                </div>
+                <hr class="border-t dark:border-[#2F3132] border-[#E9E9E9]">
+                <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <img src="./src/assets/img/logout.svg" alt="" class="w-6 h-6 ml-3">
+                    <span>خروج</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="flex items-center space-x-3 rtl:space-x-reverse mx-2.5 mt-4 md:hidden">
+        <img src="./src/assets/img/Ellipse 136.svg" alt="" class="w-12 h-12 rounded-full">
+        <div>
+            <p class="font-semibold">سلام، رویا</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">سه‌شنبه، 5 بهمن 1402</p>
+        </div>
+    </div>
+
+    <aside class="hidden md:block md:w-64 lg:w-72 xl:w-80 bg-white dark:bg-[#091120] shadow-lg p-4">
+        <div class="flex flex-col h-full justify-between">
+            <div class="space-y-8">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="./src/assets/img/Ellipse 136.svg" alt="" class="w-12 h-12 rounded-full">
+                    <div>
+                        <p class="font-semibold">سلام، رویا</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">سه‌شنبه، 5 بهمن 1402</p>
+                    </div>
+                </div>
+                <nav class="space-y-3">
+                    <a href="#"
+                       class="flex items-center px-4 py-2 rounded-lg
+                      bg-blue-50 hover:bg-blue-100 dark:bg-[#041933] dark:hover:bg-[#041933]
+                      transition-colors"
+                    >
+                        <div
+                                class="w-6 h-6 bg-blue-500 dark:bg-white flex-shrink-0
+                                   flex justify-center
+                                   mask mask-center mask-contain"
+                                style="
+                                 mask: url('./src/assets/img/home-2.svg') no-repeat center;
+                                 -webkit-mask: url('./src/assets/img/home-2.svg') no-repeat center;
+                                 mask-size: contain;
+                                 -webkit-mask-size: contain;"
+                        >
+                        </div>
+                        <span class="text-blue-600 dark:text-white font-medium mr-3">خانه</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                        <img src="./src/assets/img/task-square.svg" alt="" class="w-6 h-6">
+                        <span class="mr-3">تسک‌ها</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                        <img src="./src/assets/img/calendar.svg" alt="" class="w-6 h-6">
+                        <span class="mr-3">تقویم</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                        <img src="./src/assets/img/arrange-square-2.svg" alt="" class="w-6 h-6">
+                        <span class="mr-3">گزارشات</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                        <img src="./src/assets/img/setting.svg" alt="" class="w-6 h-6">
+                        <span class="mr-3">تنظیمات</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                        <img src="./src/assets/img/24-support.svg" alt="" class="w-6 h-6">
+                        <span class="mr-3">پشتیبانی</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-[#041933]">
+                        <img src="./src/assets/img/profile.svg" alt="" class="w-6 h-6">
+                        <span class="mr-3">پروفایل</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="space-y-4 mt-4">
+                <div class="flex justify-center">
+                    <div class="inline-flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+                        <button id="btn-light2" class="flex items-center gap-x-2 px-4 py-2 rounded-lg
+                                            bg-white text-gray-800 dark:bg-transparent dark:text-gray-400
+                                            hover:bg-white/80 dark:hover:bg-gray-700 transition">
+                            <img src="./src/assets/img/sun.svg" alt="" class="w-5 h-5">
+                            <span class="text-sm font-medium">روشن</span>
+                        </button>
+                        <button id="btn-dark2" class="flex items-center gap-x-2 px-4 py-2 rounded-lg
+                                           bg-transparent text-gray-500 dark:bg-gray-700 dark:text-gray-100
+                                           hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                            <img src="./src/assets/img/moon.svg" alt="" class="w-5 h-5">
+                            <span class="text-sm font-medium">تاریک</span>
+                        </button>
+                    </div>
+                </div>
+                <hr class="border-t dark:border-[#2F3132] border-[#E9E9E9]">
+                <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <img src="./src/assets/img/logout.svg" alt="" class="w-6 h-6 ml-3">
+                    <span>خروج</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <section class="flex-1 w-full max-w-screen-lg mx-auto py-8 px-4">
+        <div id="todo-app" class="grid grid-cols-1 grid-rows-1 h-screen items-center justify-items-center dark:bg-[#091120]">
+            <div class="w-9/12 h-full grid grid-cols-1 grid-rows-[1fr_4fr_4fr] mt-32 gap-8">
+
+                <div class="grid grid-rows-1 grid-cols-1 gap-4">
+                    <div>
+                        <b id="taskTitle" class="text-xl dark:text-white">تسک های امروز</b>
+                        <span id="taskCount" class="block text-sm dark:text-white">0 تسک را باید انجام دهید</span>
+                    </div>
+                </div>
+
+                <div id="taskcont">
+                    <a href="#" class="h-[60px] block" id="createelform">
+                        <div class="flex items-center border border-dashed border-gray-400 h-full shadow-lg rounded-xl px-4">
+                            <img src="./src/assets/img/add.svg" alt="" class="mr-2">
+                            <span class="text-blue-500 dark:text-amber-50">تسک خود را وارد کنید</span>
+                        </div>
+                    </a>
+
+                    <div id="todobuildform" class="hidden w-full h-[280px] grid grid-cols-1 grid-rows-[3fr_1fr] rounded-xl mt-4 shadow-lg border-none">
+                        <div class="grid grid-rows-[1fr_1fr_1.5fr]">
+                            <div>
+                                <label for="tittleinp"></label><input type="text" id="tittleinp" placeholder="عنوان" class="h-full w-full dark:text-white dark:bg-[#091120]">
+                            </div>
+                            <div>
+                                <label for="descinp"></label><textarea id="descinp" placeholder="توضیحات" class="w-full h-full bg-white dark:text-white dark:bg-[#091120]"></textarea>
+                            </div>
+                            <div id="parrenttag" class="flex items-center">
+                                <div id="tag" class="cursor-pointer h-[30px] w-[74px] bg-white rounded-md mr-4 border border-gray-300">
+                                    <img src="./src/assets/img/tag-right.svg" alt="" class="inline-block mr-1" id="tagimg">
+                                    <span class="text-gray-400">تگ ها</span>
+                                </div>
+                                <div id="matterdiv" class="hidden w-[213px] h-[43px] border mt-2 mr-4 border-gray-300 shadow-lg rounded-md grid grid-cols-3 grid-rows-1">
+                                    <div id="greentag" class="border-e border-e-gray-200 grid justify-items-center content-center">
+                                        <div class="w-[45px] h-[23px] bg-green-300 rounded-lg inline-block greentag">
+                                            <span class="block mr-2 mb-4 text-sm text-green-700 font-bold greentag dark:text-green-900">پایین</span>
+                                        </div>
+                                    </div>
+                                    <div id="orangtag" class="border-e border-e-gray-200 grid justify-items-center content-center">
+                                        <div class="w-[54px] h-[23px] bg-orange-200 rounded-lg inline-block orangtag">
+                                            <span class="block mr-1 mb-4 text-sm text-orange-500 font-bold orangtag dark:text-orange-500">متوسط</span>
+                                        </div>
+                                    </div>
+                                    <div id="redtag" class="grid justify-items-center content-center">
+                                        <div class="w-[31px] h-[23px] bg-red-200 rounded-lg inline-block redtag">
+                                            <span class="block mr-[6px] mb-4 text-sm font-bold text-red-600 redtag dark:text-red-800">بالا</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid justify-end content-center">
+                            <button id="addtask" class="w-[138px] h-[34px] bg-blue-500 rounded-md text-white ml-6 dark:text-white">
+                                اضافه کردن تسک
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="todobanner" class="w-full sm:w-80 mx-auto mt-8 text-center">
+                        <img src="./src/assets/img/2143202_Artboard 1.svg" alt="" class="mx-auto mb-4">
+                        <b class="block dark:text-white text-lg">چه کارهایی امروز برای انجام داری؟</b>
+                        <span class="block text-sm mt-1 dark:text-white">میتونی الان تسک‌هاتو اینجا بنویسی و برنامه ریزی رو شروع کنی!</span>
+                    </div>
+
+                    <div class="mt-5 dark:text-white">
+                        <ul id="todosContainer"></ul>
+                    </div>
+                </div>
+
+                <div class="completedtask" id="completedtask">
+                    <div>
+                        <b class="mt-6 block dark:text-white">تسک های انجام شده</b>
+                        <span class="block dark:text-white">0 تسک انجام شده است</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+</main>
+<script src="./src/js/script.js" defer></script>
+</body>
+</html>
